@@ -1,4 +1,5 @@
 import os
+import telebot
 
 from dotenv import load_dotenv
 from pathlib import Path
@@ -25,6 +26,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "users",
+    "bot",
 ]
 
 MIDDLEWARE = [
@@ -96,3 +98,9 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+TELEGRAM_BOT_API_KEY = os.getenv("TELEGRAM_BOT_API_KEY")
+TELEGRAM_BOT_NAME = os.getenv("TELEGRAM_BOT_NAME")
+TELEGRAM_BOT_SERVER = os.getenv("TELEGRAM_BOT_SERVER")
+TELEGRAM_BOT_URL = os.getenv("TELEGRAM_BOT_URL")
