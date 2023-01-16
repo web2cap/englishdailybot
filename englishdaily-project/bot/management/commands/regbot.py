@@ -6,6 +6,7 @@ from bot.bot import bot
 
 TELEGRAM_BOT_SERVER = getattr(settings, "TELEGRAM_BOT_SERVER", None)
 TELEGRAM_BOT_URL = getattr(settings, "TELEGRAM_BOT_URL", None)
+MESSAGES = getattr(settings, "MESSAGES", None)
 
 
 class Command(BaseCommand):
@@ -23,11 +24,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if options["delete"]:
             if bot.remove_webhook():
-                print("Bot was unregistred on TG server.")
+                print(MESSAGES["bot_unregistred"])
             return
 
         url = f"https://{TELEGRAM_BOT_SERVER}/bot/{TELEGRAM_BOT_URL}"
         print(f"url {url}")
         if bot.set_webhook(url=url):
-            print("Bot was registred on TG server.")
+            print(MESSAGES["bot_registred"])
         return

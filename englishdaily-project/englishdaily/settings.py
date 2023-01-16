@@ -1,5 +1,4 @@
 import os
-import telebot
 
 from dotenv import load_dotenv
 from pathlib import Path
@@ -11,12 +10,13 @@ load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
+
 DEBUG = True
 if DEBUG is True:
     ALLOWED_HOSTS = ["*"]
 # TODO:
 else:
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = [os.getenv("TELEGRAM_BOT_SERVER")]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -25,6 +25,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
+    #    "rest_framework.authtoken",
+    #    "djoser",
+    #    "django_filters",
     "users",
     "bot",
 ]
@@ -86,6 +90,18 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
+    # "DEFAULT_PAGINATION_CLASS": "api.pagination.CustomPagination",
+    # "PAGE_SIZE": 5,
+}
+
+
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
@@ -95,7 +111,11 @@ USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -104,3 +124,14 @@ TELEGRAM_BOT_API_KEY = os.getenv("TELEGRAM_BOT_API_KEY")
 TELEGRAM_BOT_NAME = os.getenv("TELEGRAM_BOT_NAME")
 TELEGRAM_BOT_SERVER = os.getenv("TELEGRAM_BOT_SERVER")
 TELEGRAM_BOT_URL = os.getenv("TELEGRAM_BOT_URL")
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost",
+    f"https://{TELEGRAM_BOT_SERVER}",
+]
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+MESSAGES = {
+    "bot_unregistred": "Bot URL was unregistred on TG server.",
+    "bot_registred": "Bot URL was registred on TG server.",
+}
