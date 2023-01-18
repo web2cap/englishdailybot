@@ -1,11 +1,9 @@
-import json
-
 from telebot import types
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .bot import bot
-from .debug import json_to_console
+from users.views import user_check_instance
 
 
 class index(APIView):
@@ -13,8 +11,7 @@ class index(APIView):
         """Get messages from TG server and pass them to bot."""
 
         json_str = request.body.decode("UTF-8")
-        #
-        json_to_console(json_str)
+        # json_to_console(json_str)
         update = types.Update.de_json(json_str)
         bot.process_new_updates([update])
 
@@ -23,7 +20,9 @@ class index(APIView):
 
 @bot.message_handler(commands=["start"])
 def start_message(message):
-    """Start message."""
+    """Start message. Register user or update username if changed."""
+
+    user_check_instance(message.from_user)
 
     text = "Wellcome!"
 

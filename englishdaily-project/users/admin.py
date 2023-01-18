@@ -37,7 +37,7 @@ class CustomUserAdmin(UserAdmin):
                     "username",
                     "password1",
                     "password2",
-                    "email",
+                    "tg_id",
                 ),
             },
         ),
