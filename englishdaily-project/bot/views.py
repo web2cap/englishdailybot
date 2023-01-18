@@ -1,8 +1,10 @@
-from telebot import types
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from telebot import types
 
 from .bot import bot
+from .models import TgPage
 from users.views import user_check_instance
 
 
@@ -18,13 +20,23 @@ class index(APIView):
         return Response({"code": 200})
 
 
+def get_tg_page(command):
+    """Get command description by command name.
+    If desabled return blank str."""
+
+    page = get_object_or_404(TgPage, command=command)
+    if page.enabled:
+        return page.text
+    return
+
+
 @bot.message_handler(commands=["start"])
 def start_message(message):
     """Start message. Register user or update username if changed."""
 
     user_check_instance(message.from_user)
 
-    text = "Wellcome!"
+    text = get_tg_page("start")
 
     keyboard = types.InlineKeyboardMarkup()
     key_begin = types.InlineKeyboardButton(
