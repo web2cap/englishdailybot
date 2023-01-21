@@ -14,8 +14,8 @@ class WordList(models.Model):
         blank=False,
     )
 
-    name_ru = models.CharField(
-        "Russian Word List name",
+    name_translated = models.CharField(
+        "Translated Word List name",
         max_length=256,
         null=True,
         blank=True,
@@ -87,8 +87,8 @@ class Word(models.Model):
         unique=True,
     )
 
-    ru = models.CharField(
-        "Russian translation",
+    native = models.CharField(
+        "Native translation",
         max_length=128,
         null=False,
         blank=False,

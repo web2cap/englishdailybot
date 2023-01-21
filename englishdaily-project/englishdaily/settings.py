@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "users",
     "bot",
     "words",
+    "core",
 ]
 
 MIDDLEWARE = [
@@ -120,6 +121,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+TRANSLATOR_FROM = "en"
+TRANSLATOR_TO = "ru"
 
 TELEGRAM_BOT_API_KEY = os.getenv("TELEGRAM_BOT_API_KEY")
 TELEGRAM_BOT_NAME = os.getenv("TELEGRAM_BOT_NAME")

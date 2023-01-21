@@ -3,3 +3,4 @@ djangorestframework==3.13.1
 pyTelegramBotAPI==4.9.0
 python-dotenv==0.21.0
 psycopg2-binary==2.9.3
+translate==3.6.1
