@@ -54,7 +54,6 @@ class WordList(models.Model):
         default=False,
     )
 
-    # TODO: on save parse
     parse = models.TextField(
         "Add many words.",
         blank=True,
@@ -62,6 +61,14 @@ class WordList(models.Model):
         default=None,
         help_text="For a quick addition, add one word per line in English.",
     )
+
+    @property
+    def words_count(self):
+        return self.words.count()
+
+    @property
+    def popularity(self):
+        return self.word_list_subscriplion.count()
 
     class Meta:
         verbose_name = "Words list"
@@ -105,6 +112,10 @@ class Word(models.Model):
     created = models.DateTimeField(
         auto_now_add=True, verbose_name="Adding date and time"
     )
+
+    @property
+    def lists_count(self):
+        return self.list.count()
 
     class Meta:
         verbose_name = "Word"
