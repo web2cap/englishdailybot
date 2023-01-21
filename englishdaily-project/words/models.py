@@ -5,6 +5,8 @@ from users.models import User
 
 
 class WordList(CreatedModel):
+    """List of word with property native or custom and public/privare access.
+    Parse field is service, only for admin panrl usage."""
 
     ACCESS_CHOICES = ((False, "Private"), (True, "Public"))
 
@@ -82,6 +84,7 @@ class WordList(CreatedModel):
 
 
 class Word(CreatedModel):
+    """Words model."""
 
     en = models.CharField(
         "English word",
@@ -89,13 +92,6 @@ class Word(CreatedModel):
         null=False,
         blank=False,
         unique=True,
-    )
-
-    native = models.CharField(
-        "Native translation",
-        max_length=128,
-        null=False,
-        blank=False,
     )
 
     list = models.ManyToManyField(
@@ -117,6 +113,59 @@ class Word(CreatedModel):
 
     def __str__(self):
         return self.en
+
+
+class Tranclation(CreatedModel):
+    """Translations for words."""
+
+    tr = models.CharField(
+        "Translation",
+        max_length=128,
+        blank=False,
+        null=False,
+    )
+
+    native = models.BooleanField(
+        blank=False,
+        null=False,
+        default=True,
+    )
+
+
+class WordTranslation(CreatedModel):
+    """Links of Translations for words."""
+
+    word = models.ForeignKey(
+        Word,
+        verbose_name="Word",
+        related_name="translation",
+        on_delete=models.CASCADE,
+    )
+
+    translation = models.ForeignKey(
+        Tranclation,
+        verbose_name="Translation",
+        related_name="word",
+        on_delete=models.CASCADE,
+    )
+
+    cost = models.PositiveIntegerField(
+        "Ordering value",
+        blank=False,
+        null=False,
+        default=0,
+    )
+
+    native = models.BooleanField(
+        "Native translation", null=False, blank=False, default=True
+    )
+
+    author = models.ForeignKey(
+        User,
+        verbose_name="Author of translation",
+        null=True,
+        on_delete=models.SET_NULL,
+    )
 
 
 class WordListSubscriplion(CreatedModel):

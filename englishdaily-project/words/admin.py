@@ -31,9 +31,9 @@ class WordListAdmin(admin.ModelAdmin):
 
 
 class WordAdmin(admin.ModelAdmin):
-    list_display = ("en", "native", "lists_count")
+    # list_display = ("en", "native", "lists_count")
     list_filter = ("list",)
-    search_fields = ("en", "native")
+    # search_fields = ("en", "native")
 
 
 class WordListSubscriplionAdmin(admin.ModelAdmin):
