@@ -115,7 +115,7 @@ class Word(CreatedModel):
         return self.en
 
 
-class Tranclation(CreatedModel):
+class Translation(CreatedModel):
     """Translations for words."""
 
     tr = models.CharField(
@@ -125,11 +125,13 @@ class Tranclation(CreatedModel):
         null=False,
     )
 
-    native = models.BooleanField(
-        blank=False,
-        null=False,
-        default=True,
-    )
+    class Meta:
+        verbose_name = "Translation"
+        verbose_name_plural = "Translations"
+        ordering = ["tr"]
+
+    def __str__(self):
+        return self.tr
 
 
 class WordTranslation(CreatedModel):
@@ -143,7 +145,7 @@ class WordTranslation(CreatedModel):
     )
 
     translation = models.ForeignKey(
-        Tranclation,
+        Translation,
         verbose_name="Translation",
         related_name="word",
         on_delete=models.CASCADE,
@@ -166,6 +168,14 @@ class WordTranslation(CreatedModel):
         null=True,
         on_delete=models.SET_NULL,
     )
+
+    class Meta:
+        verbose_name = "Word Translation"
+        verbose_name_plural = "Word Translations"
+        ordering = ["native", "word"]
+
+    def __str__(self):
+        return self.word.en
 
 
 class WordListSubscriplion(CreatedModel):

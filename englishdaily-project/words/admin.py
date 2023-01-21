@@ -1,10 +1,23 @@
 from django.contrib import admin
 
-from .models import Word, WordList, WordListSubscriplion
+from .models import (
+    Word,
+    WordList,
+    WordListSubscriplion,
+    Translation,
+    WordTranslation,
+)
 
 
 class WordInstanceInline(admin.TabularInline):
     model = Word.list.through
+    extra = 3
+    # max_num = 1
+    min_num = 1
+
+
+class WordTranslationInstanceInline(admin.TabularInline):
+    model = WordTranslation
     extra = 3
     # max_num = 1
     min_num = 1
@@ -31,9 +44,14 @@ class WordListAdmin(admin.ModelAdmin):
 
 
 class WordAdmin(admin.ModelAdmin):
-    # list_display = ("en", "native", "lists_count")
+    list_display = ("en", "lists_count")
     list_filter = ("list",)
-    # search_fields = ("en", "native")
+    search_fields = ("en",)
+    inlines = (WordTranslationInstanceInline,)
+
+
+class TranslationAdmin(admin.ModelAdmin):
+    pass
 
 
 class WordListSubscriplionAdmin(admin.ModelAdmin):
@@ -43,4 +61,5 @@ class WordListSubscriplionAdmin(admin.ModelAdmin):
 
 admin.site.register(WordList, WordListAdmin)
 admin.site.register(Word, WordAdmin)
+admin.site.register(Translation, TranslationAdmin)
 admin.site.register(WordListSubscriplion, WordListSubscriplionAdmin)
