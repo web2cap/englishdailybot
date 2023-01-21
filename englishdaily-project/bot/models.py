@@ -1,7 +1,9 @@
 from django.db import models
 
+from core.models import CreatedModel
 
-class TgPage(models.Model):
+
+class TgPage(CreatedModel):
 
     command = models.CharField(
         "command",
@@ -24,11 +26,6 @@ class TgPage(models.Model):
         blank=False,
         null=False,
         default=True,
-    )
-
-    created = models.DateTimeField(
-        "Creation date",
-        auto_now_add=True,
     )
 
     updated = models.DateTimeField(

@@ -35,7 +35,7 @@ class User(AbstractUser):
     )
 
     created = models.DateTimeField(
-        auto_now_add=True, verbose_name="Registration date and time"
+        auto_now_add=True, verbose_name="Adding date and time"
     )
 
     REQUIRED_FIELDS = ["tg_id"]

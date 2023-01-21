@@ -1,9 +1,10 @@
 from django.db import models
 
+from core.models import CreatedModel
 from users.models import User
 
 
-class WordList(models.Model):
+class WordList(CreatedModel):
 
     ACCESS_CHOICES = ((False, "Private"), (True, "Public"))
 
@@ -33,10 +34,6 @@ class WordList(models.Model):
         null=False,
         blank=False,
         related_name="word_lists",
-    )
-
-    created = models.DateTimeField(
-        auto_now_add=True, verbose_name="Adding date and time"
     )
 
     access = models.BooleanField(
@@ -84,7 +81,7 @@ class WordList(models.Model):
         return self.name
 
 
-class Word(models.Model):
+class Word(CreatedModel):
 
     en = models.CharField(
         "English word",
@@ -109,10 +106,6 @@ class Word(models.Model):
         "Example of usage", blank=True, null=True, default=None
     )
 
-    created = models.DateTimeField(
-        auto_now_add=True, verbose_name="Adding date and time"
-    )
-
     @property
     def lists_count(self):
         return self.list.count()
@@ -126,7 +119,7 @@ class Word(models.Model):
         return self.en
 
 
-class WordListSubscriplion(models.Model):
+class WordListSubscriplion(CreatedModel):
 
     user = models.ForeignKey(
         User,
@@ -144,10 +137,6 @@ class WordListSubscriplion(models.Model):
         verbose_name="Word list",
         null=False,
         blank=False,
-    )
-
-    created = models.DateTimeField(
-        auto_now_add=True, verbose_name="Subscriplion date and time"
     )
 
     rate = models.PositiveIntegerField(
