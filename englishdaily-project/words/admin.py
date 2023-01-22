@@ -13,7 +13,7 @@ class WordInstanceInline(admin.TabularInline):
     model = Word.list.through
     extra = 3
     # max_num = 1
-    min_num = 1
+    min_num = 0
 
 
 class WordTranslationInstanceInline(admin.TabularInline):

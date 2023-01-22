@@ -10,7 +10,7 @@ class Command(BaseCommand):
     help = "Parse words from tempory field."
 
     def handle(self, *args, **options):
-        logging.basicConfig(level=logging.ERROR)
+        # logging.basicConfig(level=logging.ERROR)
 
         translate_list_to_db()
         return

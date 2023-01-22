@@ -1,8 +1,10 @@
+from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from telebot import types
 
 from .bot import bot
+
 from .hendlers.comon import register_hendlers_common
 from .hendlers.word import register_hendlers_word
 
@@ -23,3 +25,8 @@ class index(APIView):
 
         register_hendlers_common()
         register_hendlers_word()
+
+
+def dict_site(request):
+    """For parsing"""
+    return render(request, "dict.html")
