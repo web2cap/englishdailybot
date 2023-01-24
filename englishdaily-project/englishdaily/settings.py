@@ -1,4 +1,5 @@
 import os
+import logging
 
 from dotenv import load_dotenv
 from pathlib import Path
@@ -137,3 +138,5 @@ MESSAGES = {
     "bot_unregistred": "Bot URL was unregistred on TG server.",
     "bot_registred": "Bot URL was registred on TG server.",
 }
+
+logging.basicConfig(level=logging.DEBUG)

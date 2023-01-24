@@ -98,8 +98,8 @@ class Word(CreatedModel):
         WordList, verbose_name="Words list", related_name="words"
     )
 
-    audio_us = models.BinaryField("USA pronunciation", null=True)
-    audio_uk = models.BinaryField("GB pronunciation", null=True)
+    audio_us = models.BinaryField("USA pronunciation", null=True, default=None)
+    audio_uk = models.BinaryField("GB pronunciation", null=True, default=None)
 
     example = models.TextField(
         "Example of usage", blank=True, null=True, default=None
