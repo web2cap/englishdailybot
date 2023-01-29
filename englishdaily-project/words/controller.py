@@ -11,6 +11,15 @@ def get_word_lists(native=True, user_rg_id=None):
     return []
 
 
+def get_word_list(id):
+    """Get list by id."""
+
+    list = WordList.objects.filter(id=id)
+    if not list.exists():
+        return
+    return list.first()
+
+
 def get_word_lists_for_parse():
     return WordList.objects.filter(parse__isnull=False)
 
