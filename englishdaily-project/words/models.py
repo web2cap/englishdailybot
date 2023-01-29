@@ -217,3 +217,52 @@ class WordListSubscriplion(CreatedModel):
 
     def __str__(self):
         return f"{self.user} by {self.list}"
+
+
+class WordLearn(CreatedModel):
+    """User log in learning words."""
+
+    STEP_CHOICE = (
+        (0, "Skip"),
+        (1, "Read"),
+        (2, "Option"),
+        (3, "Write"),
+        (4, "Pass"),
+    )
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="words_learn",
+        verbose_name="Learner",
+        null=False,
+    )
+
+    word = models.ForeignKey(
+        Word,
+        on_delete=models.CASCADE,
+        related_name="words_learn",
+        verbose_name="Learned word",
+        null=False,
+    )
+
+    step = models.IntegerField(
+        "Step",
+        choices=STEP_CHOICE,
+        blank=False,
+        null=False,
+    )
+
+    result = models.BooleanField(
+        "Result",
+        blank=False,
+        null=False,
+    )
+
+    class Meta:
+        verbose_name = "Word learning log"
+        verbose_name_plural = "Words learning log"
+        ordering = ["created"]
+
+    def __str__(self):
+        return f"{self.user}\t{self.word}\t{self.step}\t{self.result}"
