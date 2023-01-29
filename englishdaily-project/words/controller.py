@@ -1,10 +1,18 @@
 import logging
 
-from .models import WordList, Word, Translation, WordTranslation
+from users.models import User
+from .models import (
+    WordList,
+    Word,
+    Translation,
+    WordTranslation,
+    WordListSubscriplion,
+)
 
 
-def get_word_lists(native=True, user_rg_id=None):
+def get_word_lists(native=True, user_tg_id=None):
     """Get lists of word lists."""
+
     list = WordList.objects.filter(native=native).all()
     if list.exists():
         return list
@@ -70,3 +78,20 @@ def add_word_to_list(word, list):
 
 def word_exist(en):
     return Word.objects.filter(en=en).exists()
+
+
+def follow_word_list(user_tg_id, list_id, rate):
+    """Follow user to wordlist."""
+
+    try:
+        user = User.objects.get(tg_id=user_tg_id)
+        list = WordList.objects.get(id=list_id)
+        follow, _ = WordListSubscriplion.objects.update_or_create(
+            user=user,
+            list=list,
+            defaults={"rate": rate},
+        )
+        return follow
+    except Exception as err:
+        logging.warning(f"follow_word_list: [{err}]")
+        return False

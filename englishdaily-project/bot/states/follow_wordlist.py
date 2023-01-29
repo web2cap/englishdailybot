@@ -1,6 +1,6 @@
 from telebot.handler_backends import State, StatesGroup
 
 
-class WordListFollowState(StatesGroup):
+class FollowWordlistState(StatesGroup):
     wordlist_id = State()
     rate = State()
