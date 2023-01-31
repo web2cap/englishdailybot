@@ -7,6 +7,7 @@ from .bot import bot
 
 from .hendlers.comon import register_hendlers_common
 from .hendlers.follow_wordlist import register_hendlers_follow_wordlist
+from .hendlers.learn_words import register_hendlers_learn_words
 
 
 class index(APIView):
@@ -24,9 +25,4 @@ class index(APIView):
 
         register_hendlers_common()
         register_hendlers_follow_wordlist()
-
-
-def dict_site(request):
-    """For debug parsing."""
-
-    return render(request, "dict.html")
+        # register_hendlers_learn_words()

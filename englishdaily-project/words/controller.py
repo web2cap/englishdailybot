@@ -7,7 +7,10 @@ from .models import (
     Translation,
     WordTranslation,
     WordListSubscriplion,
+    WordLearn,
 )
+
+# WORD LIST
 
 
 def get_word_lists(native=True, user_tg_id=None):
@@ -35,6 +38,15 @@ def get_word_lists_for_parse():
 def clear_word_lists_parse_field(list):
     list.parse = None
     list.save()
+
+
+def add_word_to_list(word, list):
+    if not word.list.filter(id=list.id).exists():
+        word.list.add(list)
+    logging.debug(f"WORD LISTS {word.list}")
+
+
+# WORD
 
 
 def add_word(word):
@@ -70,16 +82,11 @@ def add_word(word):
     return word_instance
 
 
-def add_word_to_list(word, list):
-    if not word.list.filter(id=list.id).exists():
-        word.list.add(list)
-    logging.debug(f"WORD LISTS {word.list}")
-
-
 def word_exist(en):
     return Word.objects.filter(en=en).exists()
 
 
+# WordListSubscriplion
 def follow_word_list(user_tg_id, list_id, rate):
     """Follow user to wordlist."""
 
@@ -94,4 +101,17 @@ def follow_word_list(user_tg_id, list_id, rate):
         return follow
     except Exception as err:
         logging.warning(f"follow_word_list: [{err}]")
+        return False
+
+
+# LEARN WORDS
+
+
+def learn_words_hello(user_tg_id):
+    """Get data before start learn session."""
+
+    try:
+        return User.objects.get(tg_id=user_tg_id).word_list_subscriplion
+    except Exception as err:
+        logging.warning(f"GET USER SUBSCRIPRION: [{err}]")
         return False

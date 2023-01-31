@@ -10,13 +10,6 @@ def start_message(message):
     user_check_instance(message.from_user)
 
     text = get_tg_page("start")
-
-    # keyboard = types.InlineKeyboardMarkup()
-    # key_begin = types.InlineKeyboardButton(
-    #     text="🖊️ begin", callback_data="begin"
-    # )
-    # keyboard.add(key_begin)
-
     bot.send_message(
         message.chat.id, text=text, reply_markup=kb_main, parse_mode="HTML"
     )

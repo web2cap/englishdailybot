@@ -7,6 +7,7 @@ from random import randint
 from urllib.request import urlopen
 
 from bs4 import BeautifulSoup
+from django.conf import settings
 
 from core.translate import translator
 from .controller import (
@@ -17,8 +18,9 @@ from .controller import (
     word_exist,
 )
 
-DICT_URL = "https://wooordhunt.ru"
-DICT_PAHT = "/word/"
+
+DICT_URL = getattr(settings, "DICT_URL")
+DICT_PAHT = getattr(settings, "DICT_PAHT")
 
 
 def translate_list_to_db():
@@ -57,8 +59,6 @@ def scrap_translator(word):
     Return dict with all data."""
 
     url = DICT_URL + DICT_PAHT + word
-    # for local gebug
-    # url = "http://localhost:8000/bot/dict/"
 
     result = dict()
     try:

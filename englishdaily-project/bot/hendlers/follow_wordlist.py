@@ -1,5 +1,3 @@
-import logging
-
 from random import randint
 
 from telebot import custom_filters
@@ -9,8 +7,8 @@ from telebot.custom_filters import AdvancedCustomFilter
 
 from bot.bot import bot
 from bot.controller import get_tg_page
-from bot.factories.wordlist_factory import wordlist_factory
-from bot.keyboards.native_wordlists import products_keyboard
+from bot.factories.wordlist import factory_wordlist
+from bot.keyboards.native_wordlists import kb_wordlist
 from bot.keyboards.main import kb_main
 from bot.states.follow_wordlist import FollowWordlistState
 from words.controller import get_word_list, follow_word_list
@@ -23,7 +21,7 @@ def follow_wordlist_start(message):
     bot.send_message(
         message.chat.id,
         text=text,
-        reply_markup=products_keyboard(),
+        reply_markup=kb_wordlist(),
     )
 
 
@@ -37,7 +35,7 @@ class WordlistCallbackFilter(AdvancedCustomFilter):
 def follow_wordlist_callback(call: CallbackQuery):
     """Callback for wordlist choice. Register State. Ask daily rate."""
 
-    callback_data: dict = wordlist_factory.parse(callback_data=call.data)
+    callback_data: dict = factory_wordlist.parse(callback_data=call.data)
     id = int(callback_data["id"])
     list = get_word_list(id)
     if list:
@@ -137,5 +135,5 @@ def register_hendlers_follow_wordlist():
 
     bot.register_message_handler(follow_wordlist_start, commands=["wordlist"])
     bot.register_callback_query_handler(
-        follow_wordlist_callback, func=None, config=wordlist_factory.filter()
+        follow_wordlist_callback, func=None, config=factory_wordlist.filter()
     )
