@@ -4,6 +4,7 @@ import logging
 from dotenv import load_dotenv
 from pathlib import Path
 
+from telebot import TeleBot
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
@@ -156,4 +157,31 @@ MESSAGES = {
     "bot_registred": "Bot URL was registred on TG server.",
 }
 
-logging.basicConfig(level=logging.DEBUG)
+LOGGING = {
+    "version": 1,
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        }
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+        }
+    },
+    "loggers": {
+        "django.db.backends": {
+            "level": "DEBUG",
+            "handlers": ["console"],
+        },
+        "TeleBot": {
+            "level": "DEBUG",
+            "handlers": ["console"],
+        },
+    },
+}
+
+
+# logging.basicConfig(level=logging.DEBUG)

@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import (
     Word,
     WordList,
-    WordListSubscriplion,
+    WordListSubscription,
     Translation,
     WordTranslation,
 )
@@ -62,4 +62,4 @@ class WordListSubscriplionAdmin(admin.ModelAdmin):
 admin.site.register(WordList, WordListAdmin)
 admin.site.register(Word, WordAdmin)
 admin.site.register(Translation, TranslationAdmin)
-admin.site.register(WordListSubscriplion, WordListSubscriplionAdmin)
+admin.site.register(WordListSubscription, WordListSubscriplionAdmin)

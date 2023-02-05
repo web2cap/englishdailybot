@@ -1,25 +1,38 @@
 import logging
 
+from django.db.models import Q
+
 from users.models import User
 from .models import (
     WordList,
     Word,
     Translation,
     WordTranslation,
-    WordListSubscriplion,
+    WordListSubscription,
     WordLearn,
 )
 
 # WORD LIST
 
 
-def get_word_lists(native=True, user_tg_id=None):
+def get_word_lists(native=True):
     """Get lists of word lists."""
 
     list = WordList.objects.filter(native=native).all()
     if list.exists():
         return list
     return []
+
+
+def get_word_lists_with_subscription(tg_user_id, native=True):
+    """Get lists of word lists with subscription."""
+
+    user = User.objects.get(tg_id=tg_user_id)
+    return (
+        WordList.objects.filter(native=native)
+        .annotate(has_subscription=Q(word_list_subscription__user=user))
+        .order_by("-has_subscription")
+    )
 
 
 def get_word_list(id):
@@ -93,7 +106,7 @@ def follow_word_list(user_tg_id, list_id, rate):
     try:
         user = User.objects.get(tg_id=user_tg_id)
         list = WordList.objects.get(id=list_id)
-        follow, _ = WordListSubscriplion.objects.update_or_create(
+        follow, _ = WordListSubscription.objects.update_or_create(
             user=user,
             list=list,
             defaults={"rate": rate},

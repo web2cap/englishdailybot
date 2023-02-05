@@ -6,8 +6,9 @@ from telebot import types
 from .bot import bot
 
 from .hendlers.comon import register_hendlers_common
-from .hendlers.follow_wordlist import register_hendlers_follow_wordlist
-from .hendlers.learn_words import register_hendlers_learn_words
+from .hendlers.wordlist import register_hendlers_wordlist
+
+# from .hendlers.learn_words import register_hendlers_learn_words
 
 
 class index(APIView):
@@ -24,5 +25,5 @@ class index(APIView):
         """Register all hendlers from message handlers functions."""
 
         register_hendlers_common()
-        register_hendlers_follow_wordlist()
+        register_hendlers_wordlist()
         # register_hendlers_learn_words()

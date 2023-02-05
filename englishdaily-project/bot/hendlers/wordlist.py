@@ -1,83 +1,31 @@
-from random import randint
-
-from telebot import custom_filters
-from telebot.types import CallbackQuery
-from telebot.callback_data import CallbackDataFilter
-from telebot.custom_filters import AdvancedCustomFilter
+from telebot.callback_data import CallbackData, CallbackDataFilter
+from telebot.types import InlineKeyboardMarkup
 
 from bot.bot import bot
 from bot.controller import get_tg_page
-from bot.factories.wordlist import factory_wordlist
-from bot.keyboards.native_wordlists import kb_wordlist
 from bot.keyboards.main import kb_main
-from bot.states.follow_wordlist import FollowWordlistState
+from bot.keyboards.wordlists import kb_subscription_wordlist
 from words.controller import (
-    # get_word_list,
     follow_word_list,
     get_word_lists_with_subscription,
 )
 
 
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
-
-
-def create_word_list_buttons(word_list):
-
-    buttons = list()
-    if word_list.has_subscription:
-        follow_botton = ("Unsubscribe", "unsubscribe")
-    else:
-        follow_botton = ("Unsubscribe", "unsubscribe")
-
-    buttons.append(
-        InlineKeyboardButton(
-            follow_botton[0],
-            callback_data=f"{follow_botton[1]}_{word_list.id}",
-        )
-    )
-    buttons.append(
-        InlineKeyboardButton("View", callback_data=f"view_{word_list.id}")
-    )
-
-    return buttons
-
-
 def follow_wordlist_start(message):
     """Start follow wordlist message. Choose the list for practice."""
-
-    # text = get_tg_page("wordlist")
-    # bot.send_message(
-    #     message.chat.id,
-    #     text=text,
-    #     # reply_markup=kb_wordlist(),
-    # )
 
     word_lists = get_word_lists_with_subscription(
         message.from_user.id, native=True
     )
-    # for word_list in word_lists:
-    # print(word_list)
-    # keyboard = []
-    # buttons = create_word_list_buttons(word_list)
-    # keyboard.append(buttons)
-    # reply_markup = InlineKeyboardMarkup(keyboard)
-    # bot.send_message(
-    #     chat_id=message.chat_id,
-    #     text=word_list.name,
-    #     #    reply_markup=reply_markup,
-    # )
     for word_list in word_lists:
         print(f"NAME {word_list.name}")
         text = word_list.name
 
-        keyboard = []
-        buttons = create_word_list_buttons(word_list)
-        keyboard.append(buttons)
-        reply_markup = InlineKeyboardMarkup(keyboard)
+        keyboard = kb_subscription_wordlist(word_list)
         bot.send_message(
             message.chat.id,
             text=text,
-            reply_markup=reply_markup,
+            reply_markup=keyboard,
         )
 
 
@@ -194,7 +142,7 @@ def follow_wordlist_rate_ask_again(message, text):
     bot.register_next_step_handler(msg, follow_wordlist_rate)
 
 
-def register_hendlers_follow_wordlist():
+def register_hendlers_wordlist():
     # bot.add_custom_filter(WordlistCallbackFilter())
     # bot.add_custom_filter(custom_filters.StateFilter(bot))
     # bot.add_custom_filter(custom_filters.IsDigitFilter())
@@ -204,8 +152,8 @@ def register_hendlers_follow_wordlist():
     # bot.register_callback_query_handler(
     #     follow_wordlist_callback, func=None, config=factory_wordlist.filter()
     # )
-    bot.register_callback_query_handler(
-        handle_subscribe_callback, pattern="subscribe_.*"
-    )
+    # bot.register_callback_query_handler(
+    #     handle_subscribe_callback, pattern="subscribe_.*"
+    # )
     # bot.register_callback_query_handler(handle_unsubscribe_callback, pattern='unsubscribe_.*')
     # bot.register_callback_query_handler(handle_view_callback, pattern='view_.*')

@@ -21,4 +21,4 @@ state_storage = StateRedisStorage(
 
 bot = TeleBot(TELEGRAM_BOT_API_KEY, state_storage=state_storage)
 
-logging.getLogger("TeleBot").setLevel(logging.DEBUG)
+# logging.getLogger("TeleBot").setLevel(logging.DEBUG)

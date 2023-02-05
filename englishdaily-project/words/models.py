@@ -181,7 +181,7 @@ class WordTranslation(CreatedModel):
         return self.word.en
 
 
-class WordListSubscriplion(CreatedModel):
+class WordListSubscription(CreatedModel):
 
     user = models.ForeignKey(
         User,
@@ -195,7 +195,7 @@ class WordListSubscriplion(CreatedModel):
     list = models.ForeignKey(
         WordList,
         on_delete=models.CASCADE,
-        related_name="word_list_subscriplion",
+        related_name="word_list_subscription",
         verbose_name="Word list",
         null=False,
         blank=False,
