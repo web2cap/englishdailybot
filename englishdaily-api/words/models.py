@@ -47,7 +47,7 @@ class Collection(CreatedModel):
     )
 
     native = models.BooleanField(
-        "Native community word list",
+        "Native community collection",
         blank=False,
         null=False,
         default=False,
@@ -67,7 +67,7 @@ class Collection(CreatedModel):
 
     @property
     def popularity(self):
-        return self.word_list_subscriplion.count()
+        return self.collection_subscription.count()
 
     class Meta:
         verbose_name = "Collection"
@@ -107,7 +107,7 @@ class Word(CreatedModel):
 
     @property
     def collections_count(self):
-        return self.list.count()
+        return self.collection.count()
 
     class Meta:
         verbose_name = "Word"
@@ -185,7 +185,7 @@ class CollectionSubscription(CreatedModel):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="word_list_subscriplion",
+        related_name="collection_subscription",
         verbose_name="Follower",
         null=False,
         blank=False,
@@ -215,7 +215,7 @@ class CollectionSubscription(CreatedModel):
         ]
 
     def __str__(self):
-        return f"{self.user} by {self.list}"
+        return f"{self.user} by {self.collection}"
 
 
 class WordLearn(CreatedModel):
