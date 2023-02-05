@@ -129,25 +129,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-TRANSLATOR_FROM = "en"
-TRANSLATOR_TO = "ru"
-
-TELEGRAM_BOT_API_KEY = os.getenv("TELEGRAM_BOT_API_KEY")
-TELEGRAM_BOT_NAME = os.getenv("TELEGRAM_BOT_NAME")
-TELEGRAM_BOT_SERVER = os.getenv("TELEGRAM_BOT_SERVER")
-TELEGRAM_BOT_URL = os.getenv("TELEGRAM_BOT_URL")
-
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost",
-    f"https://{TELEGRAM_BOT_SERVER}",
-]
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
-MESSAGES = {
-    "bot_unregistred": "Bot URL was unregistred on TG server.",
-    "bot_registred": "Bot URL was registred on TG server.",
-}
-
 LOGGING = {
     "version": 1,
     "filters": {
@@ -169,6 +150,27 @@ LOGGING = {
         }
     },
 }
-
-
 # logging.basicConfig(level=logging.DEBUG)
+
+
+TRANSLATOR_FROM = "en"
+TRANSLATOR_TO = "ru"
+
+DICT_URL = os.getenv("DICT_URL")
+DICT_PAHT = os.getenv("DICT_PAHT")
+
+TELEGRAM_BOT_API_KEY = os.getenv("TELEGRAM_BOT_API_KEY")
+TELEGRAM_BOT_NAME = os.getenv("TELEGRAM_BOT_NAME")
+TELEGRAM_BOT_SERVER = os.getenv("TELEGRAM_BOT_SERVER")
+TELEGRAM_BOT_URL = os.getenv("TELEGRAM_BOT_URL")
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost",
+    f"https://{TELEGRAM_BOT_SERVER}",
+]
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+MESSAGES = {
+    "bot_unregistred": "Bot URL was unregistred on TG server.",
+    "bot_registred": "Bot URL was registred on TG server.",
+}

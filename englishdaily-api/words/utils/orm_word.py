@@ -34,7 +34,7 @@ def clear_word_collection_parse_field(list):
 
 def add_word_to_collection(word, collection):
     if not word.collection.filter(id=collection.id).exists():
-        word.collection.add(list)
+        word.collection.add(collection)
     logging.debug(f"WORD LISTS {word.collection}")
 
 

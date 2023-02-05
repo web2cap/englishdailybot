@@ -4,7 +4,7 @@ import time
 
 from random import randint
 
-from words.utils.translate import translator
+from words.utils.g_translate import translator
 from words.utils.parse_dict import scrap_translator
 from words.utils.orm_word import (
     add_word,
