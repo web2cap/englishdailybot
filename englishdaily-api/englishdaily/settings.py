@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "tgpages",
     "words",
     "core",
+    "api",
 ]
 
 MIDDLEWARE = [
@@ -108,7 +109,7 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.AllowAny",
     ],
     # "DEFAULT_PAGINATION_CLASS": "api.pagination.CustomPagination",
-    # "PAGE_SIZE": 5,
+    # "PAGE_SIZE": 30,
 }
 
 
@@ -131,6 +132,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGGING = {
     "version": 1,
+    "disable_existing_loggers": False,
     "filters": {
         "require_debug_true": {
             "()": "django.utils.log.RequireDebugTrue",
@@ -138,16 +140,25 @@ LOGGING = {
     },
     "handlers": {
         "console": {
-            "level": "DEBUG",
+            "level": "INFO",
             "filters": ["require_debug_true"],
             "class": "logging.StreamHandler",
         }
     },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
     "loggers": {
-        "django.db.backends": {
-            "level": "DEBUG",
+        # "django.db.backends": {
+        #     "level": "DEBUG",
+        #     "handlers": ["console"],
+        # },
+        "django": {
             "handlers": ["console"],
-        }
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
     },
 }
 # logging.basicConfig(level=logging.DEBUG)
@@ -173,4 +184,5 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 MESSAGES = {
     "bot_unregistred": "Bot URL was unregistred on TG server.",
     "bot_registred": "Bot URL was registred on TG server.",
+    "tg_id_update_forbidden": "tg_id update forbidden.",
 }
